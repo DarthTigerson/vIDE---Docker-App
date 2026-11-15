@@ -36,6 +36,10 @@ npm run build && npm run package
 Writes `release/docker-<version>.zip` (files at the zip root) and prints its sha256
 and size. The zip is reproducible: the same sources give the same hash.
 
+## Releasing
+
+Push a tag like `v0.1.3`. The Release workflow takes the version from the tag, runs the tests, builds `docker-<version>.zip` and publishes a GitHub release with it. The vSuite catalog picks it up within the hour (or at once, if the `VSUITE_STORE_TOKEN` secret is set).
+
 ## Store page content
 
 - `manifest.json` `description`: the one-line summary on the Store card.
