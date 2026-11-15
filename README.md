@@ -33,7 +33,7 @@ Rebuild and reload the app after changes.
 npm run build && npm run package
 ```
 
-Writes `release/docker-1.0.0.zip` (files at the zip root) and prints its sha256
+Writes `release/docker-<version>.zip` (files at the zip root) and prints its sha256
 and size. The zip is reproducible: the same sources give the same hash.
 
 ## Store page content
