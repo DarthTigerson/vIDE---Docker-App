@@ -36,25 +36,11 @@ npm run build && npm run package
 Writes `release/docker-1.0.0.zip` (files at the zip root) and prints its sha256
 and size. The zip is reproducible: the same sources give the same hash.
 
-## registry.json entry
+## Store page content
 
-```json
-{
-  "id": "docker",
-  "name": "Docker",
-  "description": "Start, stop and clean up containers from the sidebar.",
-  "repo": "DarthTigerson/vIDE---Docker-App",
-  "firstParty": true,
-  "latest": {
-    "version": "1.0.0",
-    "commit": "<full 40-char SHA of the release commit>",
-    "url": "https://github.com/DarthTigerson/vIDE---Docker-App/releases/download/v1.0.0/docker-1.0.0.zip",
-    "sha256": "767f0711cdcaa247174f9cfd605ec9d2b0f4f4bf70affa4d8048d0e366cb966b",
-    "minVide": "0.4.0",
-    "notesUrl": "https://github.com/DarthTigerson/vIDE---Docker-App/releases/tag/v1.0.0"
-  },
-  "replacesBuiltIn": "docker"
-}
-```
+- `manifest.json` `description`: the one-line summary on the Store card.
+- `store/README.md`: the About text on the Store page (shipped in the zip as `README.md`).
+- `assets/icon.svg`: the app icon.
+- Screenshots: put PNG/JPG/WebP files in `assets/` and list them in `manifest.json` as `"screenshots": ["assets/shot-1.png"]` (up to 8, 5 MB each). Leave the field out until you have some.
 
-Recompute the sha256 with `npm run package` whenever the sources change.
+The vSuite catalog rebuilds itself from the latest GitHub release, so publishing a release with `release/docker-<version>.zip` attached is all an update needs.

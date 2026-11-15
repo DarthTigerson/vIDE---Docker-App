@@ -49,5 +49,7 @@ execFileSync(
 )
 
 cpSync(p('manifest.json'), p('dist/manifest.json'))
-cpSync(p('assets/icon.svg'), p('dist/assets/icon.svg'))
+// Everything in assets/ (icon, screenshots) ships; store/README.md is the Store's About text.
+cpSync(p('assets'), p('dist/assets'), { recursive: true })
+cpSync(p('store/README.md'), p('dist/README.md'))
 console.log('built dist/')
