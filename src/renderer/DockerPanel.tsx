@@ -86,8 +86,24 @@ const STATUS_CHIP: Record<string, string> = {
   running: 'text-green-400 bg-green-400/10',
 }
 
+// Line icons for the panel's buttons, 12px in the button's text colour, like
+// vIDE's own Git panel and Todo Trash buttons.
+function ButtonIcon({ d }: { d: string }) {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="shrink-0">
+      <path d={d} />
+    </svg>
+  )
+}
+const LAUNCH_ICON = 'M7 4.5v15l12-7.5z'
+const STOP_ICON = 'M6 6h12v12H6z'
+const REMOVE_ICON = 'M4 7h16M10 11v6M14 11v6M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3'
+
+const dangerIconButtonClass =
+  'h-7 w-7 shrink-0 rounded-full flex items-center justify-center border border-red-400/55 text-red-400 transition-colors hover:bg-red-500/10 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed'
+
 const pillButtonClass =
-  'w-full h-7 rounded-full flex items-center justify-center text-[0.625rem] font-bold tracking-tight transition-colors active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed bg-accent/80 text-on-accent hover:bg-accent'
+  'w-full h-7 gap-1.5 rounded-full flex items-center justify-center text-[0.625rem] font-bold tracking-tight transition-colors active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed bg-accent/80 text-on-accent hover:bg-accent'
 
 interface ContainerGroup {
   key: string
@@ -657,7 +673,7 @@ export function DockerPanel() {
             disabled={launchingDocker}
             onClick={handleLaunchDocker}
           >
-            {launchingDocker ? <RefreshIcon className="animate-spin" /> : 'Launch Docker'}
+            {launchingDocker ? <RefreshIcon className="animate-spin" /> : <><ButtonIcon d={LAUNCH_ICON} />Launch Docker</>}
           </button>
         </div>
       )}
@@ -672,17 +688,20 @@ export function DockerPanel() {
             disabled={!hasRunningContainers || stopAllRunning}
             onClick={() => setStopAllConfirmOpen(true)}
           >
-            {stopAllRunning ? <RefreshIcon className="animate-spin" /> : 'Stop All Containers'}
+            {stopAllRunning ? <RefreshIcon className="animate-spin" /> : <><ButtonIcon d={STOP_ICON} />Stop All Containers</>}
           </button>
+          {/* Icon only, in red: Stop keeps the width and its full label. The
+              name is on hover, and the confirm dialog still spells it out. */}
           <button
             type="button"
             aria-label="Remove All Containers"
+            title="Remove All Containers"
             aria-busy={removeAllRunning}
-            className={pillButtonClass}
+            className={dangerIconButtonClass}
             disabled={containers.length === 0 || removeAllRunning}
             onClick={() => setRemoveAllConfirmOpen(true)}
           >
-            {removeAllRunning ? <RefreshIcon className="animate-spin" /> : 'Remove All Containers'}
+            {removeAllRunning ? <RefreshIcon className="animate-spin" /> : <ButtonIcon d={REMOVE_ICON} />}
           </button>
         </div>
       )}
